@@ -1,5 +1,5 @@
 # SpringData JPA简介
-一. ORM
+一. ORM介绍
 
   1.1 ORM概述
  
