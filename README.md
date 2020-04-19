@@ -63,6 +63,7 @@
     </properties>
     
     <dependencies>
+    
        <!-- junit -->
        <dependency>
          <groupId>junit</groupId>
