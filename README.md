@@ -58,47 +58,47 @@
    
     maven工程导入坐标:
     <properties>
-	  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  		<project.hibernate.version>5.0.7.Final</project.hibernate.version>
-	  </properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<project.hibernate.version>5.0.7.Final</project.hibernate.version>
+    </properties>
     
-	  <dependencies>
-		  <!-- junit -->
-		  <dependency>
-			  <groupId>junit</groupId>
-			  <artifactId>junit</artifactId>
-			  <version>4.12</version>
-			  <scope>test</scope>
-		  </dependency>
+    <dependencies>
+       <!-- junit -->
+       <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.12</version>
+         <scope>test</scope>
+       </dependency>
 
-      <!-- hibernate对jpa的支持包 -->
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-entitymanager</artifactId>
-        <version>${project.hibernate.version}</version>
-      </dependency>
+       <!-- hibernate对jpa的支持包 -->
+       <dependency>
+	 <groupId>org.hibernate</groupId>
+	 <artifactId>hibernate-entitymanager</artifactId>
+	 <version>${project.hibernate.version}</version>
+       </dependency>
 
-      <!-- c3p0 -->
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-c3p0</artifactId>
-        <version>${project.hibernate.version}</version>
-      </dependency>
+       <!-- c3p0 -->
+       <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-c3p0</artifactId>
+         <version>${project.hibernate.version}</version>
+       </dependency>
 
-      <!-- log日志 -->
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
+       <!-- log日志 -->
+       <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+         <version>1.2.17</version>
+       </dependency>
 
-      <!-- Mysql and MariaDB -->
-      <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.6</version>
-      </dependency>
-  	</dependencies>
+       <!-- Mysql and MariaDB -->
+       <dependency>
+         <groupId>mysql</groupId>
+         <artifactId>mysql-connector-java</artifactId>
+         <version>5.1.6</version>
+       </dependency>
+    </dependencies>
     
    3.2 创建客户的数据库表和客户的实体类
      
@@ -109,18 +109,22 @@
    
      使用的注解:
       @Entity
-        	作用：指定当前类是实体类。
+        	作用：指定当前类是实体类
+		
       @Table
-        	作用：指定实体类和表之间的对应关系。
+        	作用：指定实体类和表之间的对应关系
         	属性：
         		name：指定数据库表的名称
+			
       @Id
-        作用：指定当前字段是主键。
+        作用：指定当前字段是主键
+	
       @GeneratedValue
-        作用：指定主键的生成方式。。
+        作用：指定主键的生成方式
         属性：
-          strategy ：指定主键生成策略。
+          strategy ：指定主键生成策略
       例:@GeneratedValue(strategy=GenerationType.IDENTITY)
+      
       @Column
         	作用：指定实体类属性和数据库表之间的对应关系
         	属性：
@@ -134,18 +138,18 @@
             
    3.4 配置JPA的核心配置文件
    
-    在java工程的src路径下创建一个名为META-INF的文件夹，在此文件夹下创建一个名为persistence.xml的配置文件
-      <?xml version="1.0" encoding="UTF-8"?>
-      <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence  
-          http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-          version="2.0">
-          <!--配置持久化单元 
-            name：持久化单元名称 
-            transaction-type：事务类型
-              RESOURCE_LOCAL：本地事务管理 
-              JTA：分布式事务管理 -->
+     在java工程的src路径下创建一个名为META-INF的文件夹，在此文件夹下创建一个名为persistence.xml的配置文件
+       <?xml version="1.0" encoding="UTF-8"?>
+       <persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence  
+	   http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	   version="2.0">
+	   <!--配置持久化单元 
+	     name：持久化单元名称 
+	     transaction-type：事务类型
+	       RESOURCE_LOCAL：本地事务管理 
+	       JTA：分布式事务管理 -->
           <persistence-unit name="myJpa" transaction-type="RESOURCE_LOCAL">
             <!--配置JPA规范的服务提供商 -->
             <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -170,28 +174,28 @@
    3.4 实现保存操作(最原始的例子)
    
     @Test
-	  public void test() {
-		/**
-		 * 创建实体管理类工厂，借助Persistence的静态方法获取
-		 * 其中传递的参数为持久化单元名称，需要jpa配置文件中指定
-		 */
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("myJpa");
-		//创建实体管理类
-		EntityManager em = factory.createEntityManager();
-		//获取事务对象
-		EntityTransaction tx = em.getTransaction();
-		//开启事务
-		tx.begin();
-		Customer c = new Customer();
-		c.setCustName("张三");
-		//保存操作
-		em.persist(c);
-		//提交事务
-		tx.commit();
-		//释放资源
-		em.close();
-		factory.close();
-  	}
+    public void test() {
+       /**
+        * 创建实体管理类工厂，借助Persistence的静态方法获取
+        * 其中传递的参数为持久化单元名称，需要jpa配置文件中指定
+        */
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("myJpa");
+	//创建实体管理类
+	EntityManager em = factory.createEntityManager();
+	//获取事务对象
+	EntityTransaction tx = em.getTransaction();
+	//开启事务
+	tx.begin();
+	Customer c = new Customer();
+	c.setCustName("张三");
+	//保存操作
+	em.persist(c);
+	//提交事务
+	tx.commit();
+	//释放资源
+	em.close();
+	factory.close();
+    }
 
 四. JPA中的复杂查询
   
