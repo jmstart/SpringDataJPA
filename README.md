@@ -74,7 +74,7 @@
 
        <!-- hibernate对jpa的支持包 -->
        <dependency>
-	 <groupId>org.hibernate</groupId>
+         <groupId>org.hibernate</groupId>
 	 <artifactId>hibernate-entitymanager</artifactId>
 	 <version>${project.hibernate.version}</version>
        </dependency>
