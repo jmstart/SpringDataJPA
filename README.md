@@ -75,8 +75,8 @@
        <!-- hibernate对jpa的支持包 -->
        <dependency>
          <groupId>org.hibernate</groupId>
-	 <artifactId>hibernate-entitymanager</artifactId>
-	 <version>${project.hibernate.version}</version>
+         <artifactId>hibernate-entitymanager</artifactId>
+         <version>${project.hibernate.version}</version>
        </dependency>
 
        <!-- c3p0 -->
@@ -142,9 +142,9 @@
      在java工程的src路径下创建一个名为META-INF的文件夹，在此文件夹下创建一个名为persistence.xml的配置文件
        <?xml version="1.0" encoding="UTF-8"?>
        <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence  
-	   http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/persistence  
+           http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	   version="2.0">
 	   <!--配置持久化单元 
 	     name：持久化单元名称 
