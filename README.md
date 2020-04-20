@@ -380,83 +380,83 @@
    6.4 整合SpringData JPA与Spring的配置文件
     
     	<?xml version="1.0" encoding="UTF-8"?>
-	<beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-		xmlns:context="http://www.springframework.org/schema/context"
-		xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
-		xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:task="http://www.springframework.org/schema/task"
-		xsi:schemaLocation="
-			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-			http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-			http://www.springframework.org/schema/data/jpa 
-			http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+        <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-		<!-- 1.dataSource 配置数据库连接池-->
-		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-			<property name="driverClass" value="com.mysql.jdbc.Driver" />
-			<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/jpa" />
-			<property name="user" value="root" />
-			<property name="password" value="root" />
-		</bean>
+	<!-- 1.dataSource 配置数据库连接池-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/jpa" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+	</bean>
 
-		<!-- 2.配置entityManagerFactory -->
-		<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-			<property name="dataSource" ref="dataSource" />
-			<property name="packagesToScan" value="com.jiaming.entity" />
-			<property name="persistenceProvider">
-				<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
-			</property>
-			<!--JPA的供应商适配器-->
-			<property name="jpaVendorAdapter">
-				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-					<property name="generateDdl" value="false" />
-					<property name="database" value="MYSQL" />
-					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-					<property name="showSql" value="true" />
-				</bean>
-			</property>
-			<property name="jpaDialect">
-				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-			</property>
-		</bean>
+	<!-- 2.配置entityManagerFactory -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.jiaming.entity" />
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
+		</property>
+		<!--JPA的供应商适配器-->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="false" />
+				<property name="database" value="MYSQL" />
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>
+	</bean>
 
-		<!-- 3.事务管理器-->
-		<!-- JPA事务管理器  -->
-		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-			<property name="entityManagerFactory" ref="entityManagerFactory" />
-		</bean>
+	<!-- 3.事务管理器-->
+	<!-- JPA事务管理器  -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 
-		<!-- 整合spring data jpa-->
-		<jpa:repositories base-package="com.jiaming.dao"
-			transaction-manager-ref="transactionManager"
-			entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
+	<!-- 整合spring data jpa-->
+	<jpa:repositories base-package="com.jiaming.dao"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
 
-		<!-- 4.txAdvice-->
-		<tx:advice id="txAdvice" transaction-manager="transactionManager">
-			<tx:attributes>
-				<tx:method name="save*" propagation="REQUIRED"/>
-				<tx:method name="insert*" propagation="REQUIRED"/>
-				<tx:method name="update*" propagation="REQUIRED"/>
-				<tx:method name="delete*" propagation="REQUIRED"/>
-				<tx:method name="get*" read-only="true"/>
-				<tx:method name="find*" read-only="true"/>
-				<tx:method name="*" propagation="REQUIRED"/>
-			</tx:attributes>
-		</tx:advice>
+	<!-- 4.txAdvice-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
 
-		<!-- 5.aop-->
-		<aop:config>
-			<aop:pointcut id="pointcut" expression="execution(* com.jiaming.service.*.*(..))" />
-			<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
-		</aop:config>
+	<!-- 5.aop-->
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* com.jiaming.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config>
 
-		<context:component-scan base-package="com.jiaming"></context:component-scan>
+	<context:component-scan base-package="com.jiaming"></context:component-scan>
 
-		<!--组装其它 配置文件-->
-	</beans>
+	<!--组装其它 配置文件-->
+        </beans>
 
    6.4 编写符合SpringData JPA规范的Dao层接口
     
