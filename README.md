@@ -206,15 +206,271 @@
     基于首次在EJB2.0中引入的EJB查询语言(EJB QL),Java持久化查询语言(JPQL)是一种可移植的查询语言，旨在以面向对象表达式语言的表达式，将SQL语法和简单查询语义绑定在一起·使用这种语言编写的查询是可移植的，可以被编译成所有主流数据库服务器上的SQL。
     其特征与原生SQL语句类似，并且完全面向对象，通过"类名和属性"访问，而不是表名和表的属性。
 
-
-
-
-
-
-
+五. SpringData JPA的概述
+	
+   5.1 SpringData JPA的简介
    
+    SpringData JPA 是 Spring 基于ORM框架、JPA 规范的基础上封装的一套JPA应用框架，可使开发者用极简的代码即可实现对数据库的访问和操作。它提供了包括增删改查等在内的常用功能，且易于扩展！学习并使用 Spring Data JPA 可以极大提高开发效率！
+    SpringData JPA 让我们解脱了DAO层的操作，基本上所有CRUD都可以依赖于它来实现,在实际的工作工程中，推荐使用SpringData JPA + ORM（如：hibernate）完成操作，这样在切换不同的ORM框架时提供了极大的方便，同时也使数据库层操作更加简单，方便解耦。
+    
+   5.2 SpringData JPA的特性
    
+    SpringData Jpa 极大简化了数据库访问层代码。 如何简化的呢？ 使用了SpringDataJpa，我们的dao层中只需要写接口，就自动具有了增删改查、分页查询等方法。
    
+   5.3 SpringData JPA与JPA和hibernate之间的关系
+    
+    JPA是一套规范，内部是有接口和抽象类组成的。hibernate是一套成熟的ORM框架，而且Hibernate实现了JPA规范，所以也可以称hibernate为JPA的一种实现方式，我们使用JPA的API编程，意味着站在更高的角度上看待问题（面向接口编程）
+    SpringData JPA是Spring提供的一套对JPA操作更加高级的封装，是在JPA规范下的专门用来进行数据持久化的解决方案。
+
+六. SpringData JPA的快速入门
+
+   6.1 需求说明
+    
+    SpringData JPA完成客户的基本CRUD操作
+    
+   6.2 搭建SpringData JPA的开发环境
+    
+    使用Spring Data JPA，需要整合Spring与Spring Data JPA，并且需要提供JPA的服务提供者hibernate，所以需要导入spring相关坐标，hibernate坐标，数据库驱动坐标等
+    
+   6.3 maven坐标
    
+    <properties>
+        <spring.version>4.2.4.RELEASE</spring.version>
+        <hibernate.version>5.0.7.Final</hibernate.version>
+        <slf4j.version>1.6.6</slf4j.version>
+        <log4j.version>1.2.12</log4j.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
+        <mysql.version>5.1.6</mysql.version>
+    </properties>
+
+    <dependencies>
+        <!-- junit单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- spring beg -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <!-- spring end -->
+
+        <!-- hibernate beg -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.2.1.Final</version>
+        </dependency>
+        <!-- hibernate end -->
+
+        <!-- c3p0 beg -->
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+        </dependency>
+        <!-- c3p0 end -->
+
+        <!-- log end -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- log end -->
+
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.9.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.2.4.RELEASE</version>
+        </dependency>
+        
+        <!-- el beg 使用spring data jpa 必须引入 -->
+        <dependency>  
+            <groupId>javax.el</groupId>  
+            <artifactId>javax.el-api</artifactId>  
+            <version>2.2.4</version>  
+        </dependency>  
+          
+        <dependency>  
+            <groupId>org.glassfish.web</groupId>  
+            <artifactId>javax.el</artifactId>  
+            <version>2.2.4</version>  
+        </dependency> 
+        <!-- el end -->
+    </dependencies>
+    
+   6.4 整合SpringData JPA与Spring的配置文件
+    
+    	<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:task="http://www.springframework.org/schema/task"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/data/jpa 
+			http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+		<!-- 1.dataSource 配置数据库连接池-->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="com.mysql.jdbc.Driver" />
+			<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/jpa" />
+			<property name="user" value="root" />
+			<property name="password" value="root" />
+		</bean>
+
+		<!-- 2.配置entityManagerFactory -->
+		<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<property name="packagesToScan" value="com.jiaming.entity" />
+			<property name="persistenceProvider">
+				<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
+			</property>
+			<!--JPA的供应商适配器-->
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="generateDdl" value="false" />
+					<property name="database" value="MYSQL" />
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+					<property name="showSql" value="true" />
+				</bean>
+			</property>
+			<property name="jpaDialect">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+			</property>
+		</bean>
+
+		<!-- 3.事务管理器-->
+		<!-- JPA事务管理器  -->
+		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="entityManagerFactory" />
+		</bean>
+
+		<!-- 整合spring data jpa-->
+		<jpa:repositories base-package="com.jiaming.dao"
+			transaction-manager-ref="transactionManager"
+			entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
+
+		<!-- 4.txAdvice-->
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				<tx:method name="save*" propagation="REQUIRED"/>
+				<tx:method name="insert*" propagation="REQUIRED"/>
+				<tx:method name="update*" propagation="REQUIRED"/>
+				<tx:method name="delete*" propagation="REQUIRED"/>
+				<tx:method name="get*" read-only="true"/>
+				<tx:method name="find*" read-only="true"/>
+				<tx:method name="*" propagation="REQUIRED"/>
+			</tx:attributes>
+		</tx:advice>
+
+		<!-- 5.aop-->
+		<aop:config>
+			<aop:pointcut id="pointcut" expression="execution(* com.jiaming.service.*.*(..))" />
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+		</aop:config>
+
+		<context:component-scan base-package="com.jiaming"></context:component-scan>
+
+		<!--组装其它 配置文件-->
+	</beans>
+
+   6.4 编写符合SpringData JPA规范的Dao层接口
+    
+    在Spring Data JPA中，对于定义符合规范的Dao层接口，我们只需要遵循以下几点就可以了：
+    
+	1.创建一个Dao层接口，并实现JpaRepository和JpaSpecificationExecutor
+ 	2.提供相应的泛型
+       JpaRepository<实体类类型，主键类型>：用来完成基本CRUD操作
+       JpaSpecificationExecutor<实体类类型>：用于复杂查询（分页等查询操作）
+   
+   6.5 方法命名规则查询
+    
+    顾名思义，方法命名规则查询就是根据方法的名字，就能创建查询。只需要按照SpringData JPA提供的方法命名规则定义方法的名称，就可以完成查询工作。SpringData JPA在程序执行的时候会根据方法名称进行解析，并自动生成查询语句进行查询
+
+    按照SpringData JPA 定义的规则，查询方法以findBy开头，涉及条件查询时，条件的属性用条件关键字连接，要注意的是：条件属性首字母需大写。框架在进行方法名解析时，会先把方法名多余的前缀截取掉，然后对剩下部分进行解析。
     
     
