@@ -458,7 +458,7 @@
 	<!--组装其它 配置文件-->
     </beans>
 
-   6.4 编写符合SpringData JPA规范的Dao层接口
+   6.5 编写符合SpringData JPA规范的Dao层接口
     
     在Spring Data JPA中，对于定义符合规范的Dao层接口，我们只需要遵循以下几点就可以了：
     
@@ -467,7 +467,7 @@
        JpaRepository<实体类类型，主键类型>：用来完成基本CRUD操作
        JpaSpecificationExecutor<实体类类型>：用于复杂查询（分页等查询操作）
    
-   6.5 方法命名规则查询
+   6.6 方法命名规则查询
     
     顾名思义，方法命名规则查询就是根据方法的名字，就能创建查询。只需要按照SpringData JPA提供的方法命名规则定义方法的名称，就可以完成查询工作。SpringData JPA在程序执行的时候会根据方法名称进行解析，并自动生成查询语句进行查询
 
