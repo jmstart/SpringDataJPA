@@ -456,7 +456,7 @@
 	<context:component-scan base-package="com.jiaming"></context:component-scan>
 
 	<!--组装其它 配置文件-->
-        </beans>
+    </beans>
 
    6.4 编写符合SpringData JPA规范的Dao层接口
     
