@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <!--
+        刚刚导完约束后,会报错是因为没有配置 持久化单元节点 persistence-unit
+        name:持久化单元名称
+        transaction-type:事务管理方式
+            JTA:分布式事务管理(不同数据库)
+            RESOURCE_LOCAL:本地事务管理(相同数据库)
+    -->
+    <persistence-unit name="myJpa" transaction-type="RESOURCE_LOCAL">
+        <!--jpa需要的配置信息-->
+
+        <!--1.jpa的实现方式-->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <properties>
+            <!--2.数据库信息-->
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="root"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql:///jpa"/>
+
+            <!--3.可选配置:配置jpa实现方(就是Hibernate)的配置信息
+                    a: 显示sql   :   true|false 显示|不显示
+                    b: 自动创建数据库表  :  create:程序运行时创建数据库表(有表先删在建)
+                                          update:程序运行时创建数据库表(有表不创建)
+                                          none:不创建表
+            -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
