@@ -477,7 +477,7 @@
   
    7.1 JpaSpecificationExecutor接口简介
    
-      有时我们在查询某个实体的时候，给定的条件是不固定的，这时就需要动态构建相应的查询语句，
+    有时我们在查询某个实体的时候，给定的条件是不固定的，这时就需要动态构建相应的查询语句，
     在SpringData JPA中可以通过JpaSpecificationExecutor接口查询。相比JPQL,其优势是类型安全,更加的面向对象。
 
 
