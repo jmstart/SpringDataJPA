@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @create 2020-04-21 8:23
  */
 @Entity
-@Table(name = "cst_customer")
+@Table(name = "cst_customer") //关联数据库
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
