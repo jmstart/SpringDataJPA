@@ -484,11 +484,11 @@
     Specification接口中只定义了如下一个方法：
     //构造查询条件
     /**
-    *	root	：Root接口，代表查询的根对象，可以通过root获取实体中的属性
-    *	query	：代表一个顶层查询对象，用来自定义查询
-    *	cb		：用来构建查询，此对象里有很多条件方法
-    **/
-    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb);
+     *	root	：Root接口，代表查询的根对象，可以通过root获取实体中的属性
+     *	query	：代表一个顶层查询对象，用来自定义查询
+     *	cb		：用来构建查询，此对象里有很多条件方法
+     **/
+     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb);
 
 八. JPA中的一对多和多对多
 
