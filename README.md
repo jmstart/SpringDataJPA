@@ -479,12 +479,95 @@
    
     有时我们在查询某个实体的时候，给定的条件是不固定的，这时就需要动态构建相应的查询语句，
     在SpringData JPA中可以通过JpaSpecificationExecutor接口查询。相比JPQL,其优势是类型安全,更加的面向对象。
-
-
-
-
-
-
-
-
+    对于JpaSpecificationExecutor，这个接口基本是围绕着Specification接口来定义的。我们可以简单的理解为，Specification构造的就是查询条件。
     
+    Specification接口中只定义了如下一个方法：
+    //构造查询条件
+    /**
+    *	root	：Root接口，代表查询的根对象，可以通过root获取实体中的属性
+    *	query	：代表一个顶层查询对象，用来自定义查询
+    *	cb		：用来构建查询，此对象里有很多条件方法
+    **/
+    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb);
+
+八. JPA中的一对多和多对多
+
+   8.1 映射的注解说明
+    
+    @OneToMany:
+   	作用：建立一对多的关系映射
+    属性：
+    	targetEntityClass：指定多的多方的类的字节码
+    	mappedBy：指定从表实体类中引用主表对象的名称。
+    	cascade：指定要使用的级联操作
+    	fetch：指定是否采用延迟加载
+    	orphanRemoval：是否使用孤儿删除
+
+	@ManyToOne
+	    作用：建立多对一的关系
+	    属性：
+		targetEntityClass：指定一的一方实体类字节码
+		cascade：指定要使用的级联操作
+		fetch：指定是否采用延迟加载
+		optional：关联是否可选。如果设置为false，则必须始终存在非空关系。
+
+	@JoinColumn
+	     作用：用于定义主键字段和外键字段的对应关系。
+	     属性：
+		name：指定外键字段的名称
+		referencedColumnName：指定引用主表的主键字段名称
+		unique：是否唯一。默认值不唯一
+		nullable：是否允许为空。默认值允许。
+		insertable：是否允许插入。默认值允许。
+		updatable：是否允许更新。默认值允许。
+		columnDefinition：列的定义信息。
+	
+   8.2 放弃主键维护 
+    
+    /**
+     *放弃外键维护权的配置将如下配置改为
+     */
+    //@OneToMany(targetEntity=LinkMan.class)
+    //@JoinColumn(name="lkm_cust_id",referencedColumnName="cust_id")	
+    //设置为
+    @OneToMany(mappedBy="customer")
+	
+	
+  8.3 删除
+   
+    删除操作的说明如下：
+    删除从表数据：可以随时任意删除。
+    删除主表数据：
+    有从表数据
+     1、在默认情况下，它会把外键字段置为null，然后删除主表数据。如果在数据库的表结构上，外键字段有非空约束，默认情况就会报错了。
+     2、如果配置了放弃主键维护关联关系的权利，则不能删除（与外键字段是否允许为null没有关系）因为在删除时，它根本不会去更新从表的外键字段了。
+     3、如果还想删除，使用级联删除引用
+     没有从表数据引用：随便删
+     在实际开发中，级联删除请慎用！(在一对多的情况下)
+	
+   8.4 级联操作
+    
+    使用方法：只需要在操作主体的注解上配置cascade
+    /**
+     * cascade:配置级联操作
+     * 		CascadeType.MERGE	级联更新
+     * 		CascadeType.PERSIST	级联保存：
+     * 		CascadeType.REFRESH 级联刷新：
+     * 		CascadeType.REMOVE	级联删除：
+     * 		CascadeType.ALL		包含所有
+     */
+     @OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
+	
+   8.5 立即加载与延迟加载
+   
+    配置方式：
+    /**
+     * 在客户对象的@OneToMany注解中添加fetch属性
+     * 		FetchType.EAGER	：立即加载
+     * 		FetchType.LAZY	：延迟加载
+     */
+     @OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+     private Set<LinkMan> linkMans = new HashSet<>(0);
+     
+     如一方查询多方,推荐使用延迟加载!!!
+     如多方查询一方,使用立即加载和延迟加载都可以
