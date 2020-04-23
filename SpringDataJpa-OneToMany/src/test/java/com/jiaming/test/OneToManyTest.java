@@ -56,7 +56,7 @@ public class OneToManyTest {
      * 级联添加:
      *      保存一个客户的同时,保存所有联系人
      * 级联的使用:
-     *      需要在操作的主体类上,配置cascate属性
+     *      需要在操作的主体类上,配置cascate级联属性
      */
     @Test
     @Transactional
@@ -84,9 +84,9 @@ public class OneToManyTest {
     @Transactional
     @Rollback(value = false)
     public void testCascateDelete() {
-        //1.先查询
+        //1.查询
         Customer customer = customerDao.findOne(1l);
-        //2.在删除,只删除客户,测试级联删除
+        //2.删除,只删除客户,测试级联删除
         customerDao.delete(customer);
     }
 
