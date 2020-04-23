@@ -70,7 +70,7 @@ public class JpaTest {
         em.persist(customer);
         //提交
         tx.commit();
-        //释放资源,实体管理工厂对象不用关闭了,因为它是公共的了
+        //释放资源,实体管理工厂对象不用关闭了,因为它现在是公共的
         em.close();
     }
 
