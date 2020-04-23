@@ -29,11 +29,10 @@ public class JpqlTest {
 
     /**
      * 测试按名称查找客户
-     * 已在CustomerDao接口写好了方法
      */
     @Test
     public void testFindJpql() {
-        Customer customer = customerDao.findJpql("欣欣");
+        Customer customer = customerDao.findJpql("张三");
         System.out.println(customer);
     }
 
@@ -50,8 +49,8 @@ public class JpqlTest {
      * 测试更新客户姓名
      *
      * 修改/删除:
-     * 都客户需要加事务注解 @Transactional支持,
-     * 但是数据会默认回滚,所以数据库没有变化
+     * 都需要加事务注解 @Transactional支持,
+     * 但是数据会默认回滚,所以数据库没有变化,
      * 我们需要把自动回滚的功能关掉,所以还需要一个注解 @Rollback
      */
     @Test
@@ -77,7 +76,7 @@ public class JpqlTest {
      */
     @Test
     public void testFindCustomerName() {
-        Customer customer = customerDao.findCustomerName("欣%");
+        Customer customer = customerDao.findCustomerName("张%");
         System.out.println(customer);
     }
 
@@ -86,7 +85,7 @@ public class JpqlTest {
      */
     @Test
     public void testFindByCustName() {
-        Customer customer = customerDao.findByCustName("欣欣");
+        Customer customer = customerDao.findByCustName("张三");
         System.out.println(customer);
     }
 
@@ -95,7 +94,7 @@ public class JpqlTest {
      */
     @Test
     public void testFindByCustNameLike() {
-        Customer customer = customerDao.findByCustNameLike("欣%");
+        Customer customer = customerDao.findByCustNameLike("张%");
         System.out.println(customer);
     }
 
@@ -104,7 +103,7 @@ public class JpqlTest {
      */
     @Test
     public void testFindByCustNameLikeAndCustIndustry() {
-        Customer customer = customerDao.findByCustNameLikeAndCustIndustry("欣%", "Java");
+        Customer customer = customerDao.findByCustNameLikeAndCustIndustry("张%", "Java");
         System.out.println(customer);
     }
 }
