@@ -105,7 +105,7 @@ public class SpecTest01 {
                 Path<Object> custName = root.get("custName");
 
                 //查询条件
-                //使用 like要得到它的参数类型所以用 as方法获得其参数类型
+                //使用like要得到它的参数类型,所以用as方法获得其参数类型
                 Predicate predicate = criteriaBuilder.like(custName.as(String.class), "猪%");
 
                 return predicate;
