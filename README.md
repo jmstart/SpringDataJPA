@@ -173,13 +173,13 @@
               <!-- 数据库驱动 -->
               <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
               <!-- 数据库地址 -->
-              <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ssh" />
+              <property name="javax.persistence.jdbc.url" value="jdbc:mysql:///jpa" />
               <!-- 数据库用户名 -->
               <property name="javax.persistence.jdbc.user" value="root" />
               <!-- 数据库密码 -->
-              <property name="javax.persistence.jdbc.password" value="111111" />
+              <property name="javax.persistence.jdbc.password" value="root" />
 
-              <!--jpa提供者的可选配置：我们的JPA规范的提供者为hibernate，所以jpa的核心配置中兼容hibernate的配 -->
+              <!--jpa提供者的可选配置：我们的JPA规范的提供者为hibernate，所以jpa的核心配置中兼容hibernate的配置-->
               <property name="hibernate.show_sql" value="true" />
               <property name="hibernate.format_sql" value="true" />
               <property name="hibernate.hbm2ddl.auto" value="create" />
@@ -421,7 +421,7 @@
 	<!-- 1.dataSource 配置数据库连接池-->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/jpa" />
+		<property name="jdbcUrl" value="jdbc:mysql:///jpa" />
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 	</bean>
