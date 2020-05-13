@@ -62,6 +62,7 @@
    
     JPA规范本质上就是一种ORM规范，注意不是ORM框架——因为JPA并未提供ORM实现，它只是制订了一些规范，
     提供了一些编程的API接口，但具体实现则由服务厂商来提供实现。     
+    
     JPA和Hibernate的关系就像JDBC和JDBC驱动的关系，JPA是规范，Hibernate除了作为ORM框架之外，它也是一种JPA实现。
     JPA怎么取代Hibernate呢？JDBC规范可以驱动底层数据库吗？答案是否定的，也就是说，
     如果使用JPA规范进行数据库操作，底层需要hibernate作为其实现类完成数据持久化工作。
