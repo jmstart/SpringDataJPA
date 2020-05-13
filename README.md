@@ -42,21 +42,29 @@
 
   3. 简单方便
   
-    JPA的主要目标之一就是提供更加简单的编程模型：在JPA框架下创建实体和创建Java 类一样简单，没有任何的约束和限制，只需要使用 		  javax.persistence.Entity进行注释，JPA的框架和接口也都非常简单，没有太多特别的规则和设计模式的要求，开发者可以很容易的掌握。
+    JPA的主要目标之一就是提供更加简单的编程模型：在JPA框架下创建实体和创建Java类一样简单，没有任何的约束和限制，
+    只需要使javax.persistence.Entity进行注释，JPA的框架和接口也都非常简单，没有太多特别的规则和设计模式的要求，开发者可以很容易的掌握。
     JPA基于非侵入式原则设计，因此可以很容易的和其它框架或者容器集成
 
   4. 查询能力
 
-    JPA的查询语言是面向对象而非面向数据库的，它以面向对象的自然语法构造查询语句，可以看成是Hibernate HQL的等价物。JPA定义了独特的JPQL（Java Persistence Query Language），JPQL是EJB QL的一种扩展，它是针对实体的一种查询语言，操作对象是实体，而不是关系数据库的表，而且能够支持批量更新和修改、JOIN、GROUP BY、HAVING 等通常只有 SQL 才能够提供的高级查询特性，甚至还能够支持子查询。
+    JPA的查询语言是面向对象而非面向数据库的，它以面向对象的自然语法构造查询语句，可以看成是Hibernate HQL的等价物。
+    JPA定义了独特的JPQL（Java Persistence Query Language），JPQL是EJB QL的一种扩展，它是针对实体的一种查询语言，
+    操作对象是实体，而不是关系数据库的表，而且能够支持批量更新和修改、JOIN、GROUP BY、HAVING 等
+    通常只有SQL才能够提供的高级查询特性，甚至还能够支持子查询。
 
   5. 高级特性
   
-    JPA 中能够支持面向对象的高级特性，如类之间的继承、多态和类之间的复杂关系，这样的支持能够让开发者最大限度的使用面向对象的模型设计企业应用，而不需要自行处理这些特性在关系数据库的持久化。
+    JPA 中能够支持面向对象的高级特性，如类之间的继承、多态和类之间的复杂关系，这样的支持能够让开发者最大限度的使用面向对象的模型设计企业应用，
+    而不需要自行处理这些特性在关系数据库的持久化。
     
   2.4 JPA与hibernate的关系
    
-    JPA规范本质上就是一种ORM规范，注意不是ORM框架——因为JPA并未提供ORM实现，它只是制订了一些规范，提供了一些编程的API接口，但具体实现则由服务厂商来提供实现。     
-    JPA和Hibernate的关系就像JDBC和JDBC驱动的关系，JPA是规范，Hibernate除了作为ORM框架之外，它也是一种JPA实现。JPA怎么取代Hibernate呢？JDBC规范可以驱动底层数据库吗？答案是否定的，也就是说，如果使用JPA规范进行数据库操作，底层需要hibernate作为其实现类完成数据持久化工作。
+    JPA规范本质上就是一种ORM规范，注意不是ORM框架——因为JPA并未提供ORM实现，它只是制订了一些规范，
+    提供了一些编程的API接口，但具体实现则由服务厂商来提供实现。     
+    JPA和Hibernate的关系就像JDBC和JDBC驱动的关系，JPA是规范，Hibernate除了作为ORM框架之外，它也是一种JPA实现。
+    JPA怎么取代Hibernate呢？JDBC规范可以驱动底层数据库吗？答案是否定的，也就是说，
+    如果使用JPA规范进行数据库操作，底层需要hibernate作为其实现类完成数据持久化工作。
 
 三. JPA的入门案例
    
@@ -209,23 +217,31 @@
   4.1 JPQL简介
     
     JPQL全称Java Persistence Query Language
-    基于首次在EJB2.0中引入的EJB查询语言(EJB QL),Java持久化查询语言(JPQL)是一种可移植的查询语言，旨在以面向对象表达式语言的表达式，将SQL语法和简单查询语义绑定在一起·使用这种语言编写的查询是可移植的，可以被编译成所有主流数据库服务器上的SQL。
+    基于首次在EJB2.0中引入的EJB查询语言(EJB QL),Java持久化查询语言(JPQL)是一种可移植的查询语言，旨在以面向对象表达式语言的表达式，
+    将SQL语法和简单查询语义绑定在一起·使用这种语言编写的查询是可移植的，可以被编译成所有主流数据库服务器上的SQL。
     其特征与原生SQL语句类似，并且完全面向对象，通过"类名和属性"访问，而不是表名和表的属性。
 
 五. SpringData JPA的概述
 	
    5.1 SpringData JPA的简介
    
-    SpringData JPA 是 Spring 基于ORM框架、JPA 规范的基础上封装的一套JPA应用框架，可使开发者用极简的代码即可实现对数据库的访问和操作。它提供了包括增删改查等在内的常用功能，且易于扩展！学习并使用 Spring Data JPA 可以极大提高开发效率！
-    SpringData JPA 让我们解脱了DAO层的操作，基本上所有CRUD都可以依赖于它来实现,在实际的工作工程中，推荐使用SpringData JPA + ORM（如：hibernate）完成操作，这样在切换不同的ORM框架时提供了极大的方便，同时也使数据库层操作更加简单，方便解耦。
+    SpringData JPA 是 Spring 基于ORM框架、JPA 规范的基础上封装的一套JPA应用框架，可使开发者用极简的代码即可实现对数据库的访问和操作。
+    它提供了包括增删改查等在内的常用功能，且易于扩展！学习并使用 Spring Data JPA 可以极大提高开发效率！
+    SpringData JPA 让我们解脱了DAO层的操作，基本上所有CRUD都可以依赖于它来实现，
+    在实际的工作工程中，推荐使用SpringData JPA + ORM（如：hibernate）完成操作，
+    这样在切换不同的ORM框架时提供了极大的方便，同时也使数据库层操作更加简单，方便解耦。
     
    5.2 SpringData JPA的特性
    
-    SpringData Jpa 极大简化了数据库访问层代码。 如何简化的呢？ 使用了SpringDataJpa，我们的dao层中只需要写接口，就自动具有了增删改查、分页查询等方法。
+    SpringData Jpa 极大简化了数据库访问层代码。 如何简化的呢？ 
+    使用了SpringDataJpa，我们的dao层中只需要写接口，就自动具有了增删改查、分页查询等方法。
    
    5.3 SpringData JPA与JPA和hibernate之间的关系
     
-    JPA是一套规范，内部是有接口和抽象类组成的。hibernate是一套成熟的ORM框架，而且Hibernate实现了JPA规范，所以也可以称hibernate为JPA的一种实现方式，我们使用JPA的API编程，意味着站在更高的角度上看待问题（面向接口编程）
+    JPA是一套规范，内部是有接口和抽象类组成的。
+    hibernate是一套成熟的ORM框架，而且Hibernate实现了JPA规范，所以也可以称hibernate为JPA的一种实现方式，
+    我们使用JPA的API编程，意味着站在更高的角度上看待问题（面向接口编程）
+    
     SpringData JPA是Spring提供的一套对JPA操作更加高级的封装，是在JPA规范下的专门用来进行数据持久化的解决方案。
 
 六. SpringData JPA的快速入门
@@ -236,7 +252,8 @@
     
    6.2 搭建SpringData JPA的开发环境
     
-    使用Spring Data JPA，需要整合Spring与Spring Data JPA，并且需要提供JPA的服务提供者hibernate，所以需要导入spring相关坐标，hibernate坐标，数据库驱动坐标等
+    使用Spring Data JPA，需要整合Spring与Spring Data JPA，并且需要提供JPA的服务提供者hibernate，
+    所以需要导入spring相关坐标，hibernate坐标，数据库驱动坐标等
     
    6.3 maven坐标
    
@@ -469,15 +486,19 @@
     在Spring Data JPA中，对于定义符合规范的Dao层接口，我们只需要遵循以下几点就可以了：
     
 	1.创建一个Dao层接口，并实现JpaRepository和JpaSpecificationExecutor
+	
  	2.提供相应的泛型
-       JpaRepository<实体类类型，主键类型>：用来完成基本CRUD操作
-       JpaSpecificationExecutor<实体类类型>：用于复杂查询（分页等查询操作）
+          JpaRepository<实体类类型，主键类型>：用来完成基本CRUD操作
+          JpaSpecificationExecutor<实体类类型>：用于复杂查询（分页等查询操作）
    
    6.6 方法命名规则查询
     
-    顾名思义，方法命名规则查询就是根据方法的名字，就能创建查询。只需要按照SpringData JPA提供的方法命名规则定义方法的名称，就可以完成查询工作。SpringData JPA在程序执行的时候会根据方法名称进行解析，并自动生成查询语句进行查询
+    顾名思义，方法命名规则查询就是根据方法的名字，就能创建查询。
+    只需要按照SpringData JPA提供的方法命名规则定义方法的名称，就可以完成查询工作。
+    SpringData JPA在程序执行的时候会根据方法名称进行解析，并自动生成查询语句进行查询
 
-    按照SpringData JPA 定义的规则，查询方法以findBy开头，涉及条件查询时，条件的属性用条件关键字连接，要注意的是：条件属性首字母需大写。框架在进行方法名解析时，会先把方法名多余的前缀截取掉，然后对剩下部分进行解析。
+    按照SpringData JPA 定义的规则，查询方法以findBy开头，涉及条件查询时，条件的属性用条件关键字连接，
+    要注意的是：条件属性首字母需大写。框架在进行方法名解析时，会先把方法名多余的前缀截取掉，然后对剩下部分进行解析。
  
 七. Specifications动态查询
   
